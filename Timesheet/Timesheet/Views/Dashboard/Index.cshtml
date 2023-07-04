@@ -1,0 +1,182 @@
+@model Timesheet.ViewModels.DashboardViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timesheet</title>
+    <link rel="stylesheet" href="~/Content/Dashboard/css/index.css">
+    <link rel="stylesheet" href="~/Content/Componentes//modal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+</head>
+
+<body>
+    <header>
+        <div class="navbar">
+            <div style="display: flex; justify-content: space-between">
+                <p class="titulo">Timesheet/Aprovar Timesheet</p>
+                @if (User.Identity.IsAuthenticated)
+                {<div class="box-usuario">
+                        <p class="text-sm">Bem vindo, @User.Identity.Name</p>
+                        <a href="@Url.Action("Sair", "Login")"><button class="btn-sair"><i class="fa-solid fa-right-from-bracket"></i> Sair</button></a>
+                    </div>
+                }
+            </div>
+            <form action="" class="buscar-por-periodo d-flex flex-column align-self-start pb-5">
+                <label class="mb-1" for="Selecione um P�riodo">Selecione o Periodo</label>
+                <input class="in-periodo" type="date">
+            </form>
+        </div>
+    </header>
+    <main>
+        <div class="box-tabela">
+            <table>
+                <thead>
+                    <div>
+                <th class="titulos">Projeto</th>
+        </div>
+        <div>
+            <th class="titulos">Job</th>
+        </div>
+        <th class="titulos">SEG<br>12/07</th>
+        <th class="titulos">TER<br>13/07</th>
+        <th class="titulos">QUA<br>14/07</th>
+        <th class="titulos">QUI<br>15/07</th>
+        <th class="titulos">SEX<br>16/07</th>
+        <th class="titulos">SAB<br>17/07</th>
+        <th class="titulos">DOM<br>18/07</th>
+        </thead>
+        <tbody>
+            @foreach (var usuario in Model.Usuarios)
+            {
+
+                <td class="box">
+                    <div class="box-acoes">
+                        <div class="user">
+                            <i class="fa-solid fa-user"></i>
+                            <p class="username">@usuario.Nome</p>
+                        </div>
+                        <button class="btn-acoes">
+                            <i class="fa-solid fa-check"></i>
+                            Aprovar todas
+                        </button>
+                        <button class="btn-acoes">
+                            <i class="fa-solid fa-xmark"></i>
+                            Reprovar todas
+                        </button>
+
+                        <button class="btn-acoes">
+                            <i class="fa-regular fa-paper-plane"></i>
+                            Enviar para aprovacao
+                        </button>
+                    </div>
+
+                    @foreach (var projeto in usuario.Projetos)
+                    {
+                        <div class="box-apontamentos">
+                            <div class="box-projeto">
+                                <p class="nome-projeto">@projeto.Nome</p>
+                                <p class="nome-cliente">@projeto.Descricao</p>
+                            </div>
+
+                            @foreach (var job in projeto.Jobs)
+                            {
+                                <div class="box-job">
+                                    <p data-toggle="tooltip" data-placement="right" title="Descricao: @job.Descricao">@job.Nome</p>
+                                </div>
+
+                                foreach (var lancamento in job.Lancamentos)
+                                {
+                                    <p class="@lancamento.Status celula-lancamento">@lancamento.Hora</p>
+                                }
+                                break;
+                            }
+                        </div>
+                        <hr style="min-width: 98vw;" />
+                    }
+
+                </td>
+            }
+        </tbody>
+        </table>
+
+        </div>
+
+    </main>
+
+
+    <div class="modal d-none" tabindex="-1">
+        <div class="modal-header">
+            <h3>Aprovacoes</h3>
+            <button class="btn-fechar-modal">
+                <i class="fa-solid fa-x fa-lg"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="modal-body-usuario">
+                <p>Jose</p>
+                <p> <i class="fa-solid fa-arrow-right fa-sm"></i></p>
+                <p>APROVADO</p>
+                <div class="box-circulo-status">
+                    <div class="APROVADO" style="min-height: 18px; min-width: 18px; border-radius: 100%;" data-toggle="tooltip" data-placement="right" title="Aprovado"></div>
+                </div>
+            </div>
+            <div class="modal-body-usuario">
+                <p>Lucas</p>
+                <p> <i class="fa-solid fa-arrow-right fa-sm"></i></p>
+                <p>REPROVADO</p>
+                <div class="box-circulo-status">
+                    <div class="REPROVADO" style="min-height: 18px; min-width: 18px; border-radius: 100%;" data-toggle="tooltip" data-placement="right" title="Reprovado"></div>
+                </div>
+            </div>
+            <div class="modal-body-usuario">
+                <p>Jarbas</p>
+                <p> <i class="fa-solid fa-arrow-right fa-sm"></i></p>
+                <p>PENDENTE</p>
+                <div class="box-circulo-status">
+                    <i class="fa-solid fa-trash btn-remover-aprovador" data-toggle="tooltip" data-placement="right" title="Remover aprovador"></i>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <form>
+                    <label>Adicionar aprovador</label>
+                    <div class="box-select">
+                        <select>
+                            <option>Fulano</option>
+                            <option>Beltrano</option>
+                        </select>
+                    </div>
+                    <div class="box-button">
+                        <button class="" onclick="AdicionarAprovador(1, 1)">Adicionar&nbsp;<i class="fa-solid fa-plus"></i></button>
+                    </div>
+                </form>
+                    <div class="box-aprovacao">
+                        <form>
+                            <button class="btn verde">Aprovar&nbsp;<i class="fa-regular fa-calendar-check fa-lg"></i></button>
+                        </form>
+                        <form>
+                            <button class="btn vermelho">Reprovar&nbsp;<i class="fa-regular fa-calendar-xmark fa-lg"></i></button>
+                        </form>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="~/Content/Dashboard/js/index.js"></script>
+</body>
+
+
+
+
+</html>

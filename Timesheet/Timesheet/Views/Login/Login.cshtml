@@ -1,0 +1,26 @@
+@model Timesheet.ViewModels.LoginViewModel
+
+<style>
+
+    .mt-2 {
+        margin-top: 2rem;
+    }
+</style>
+<div class="container p-5">
+    <form method="post" action="Login">
+        <h1>Login</h1>
+        <label class="form-label">E-mail</label>
+        <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="teste@adverhouse.com" autocomplete="email">
+        <label class="form-label mt-2">Senha</label>
+        <input type="password" name="senha" id="inputPassword5" class="form-control" aria-labelledby="passwordHelpBlock"  autocomplete="current-password">
+        @if (Model != null && Model.Mensagem != null)
+        {
+            <div class="container" style="padding: 0;">
+            <div id="passwordHelpBlock" class="alert-dismissable alert-danger alert mt-2 col-sm-4" style="margin-bottom: 0;">
+                @Model.Mensagem
+            </div>
+            </div>
+        }
+        <button class="btn mt-2" type="submit">Entrar</button>
+    </form>
+</div>
