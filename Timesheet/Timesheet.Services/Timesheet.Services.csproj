@@ -7,8 +7,8 @@
     <ProjectGuid>{1F8E28CE-26B5-4514-8F75-B2FE6B7C0B11}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Timesheet.Domain</RootNamespace>
-    <AssemblyName>Timesheet.Domain</AssemblyName>
+    <RootNamespace>Timesheet.Services</RootNamespace>
+    <AssemblyName>Timesheet.Services</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

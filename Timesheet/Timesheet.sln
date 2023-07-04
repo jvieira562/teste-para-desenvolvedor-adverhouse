@@ -11,7 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Application", "1 - Appl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3 - Services", "3 - Services", "{ADF59475-EAE7-404A-8328-81EA88B4F228}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesheet.Services", "Timesheet.Domain\Timesheet.Services.csproj", "{1F8E28CE-26B5-4514-8F75-B2FE6B7C0B11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesheet.Services", "Timesheet.Services\Timesheet.Services.csproj", "{1F8E28CE-26B5-4514-8F75-B2FE6B7C0B11}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Models", "2 - Models", "{2BA68459-E45D-4B41-828F-0847F480DFC0}"
 EndProject

@@ -210,13 +210,13 @@
       <Project>{b98c5e8f-1eb5-4b52-ad57-ccd89d8e4b22}</Project>
       <Name>Timesheet.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Timesheet.Domain\Timesheet.Services.csproj">
-      <Project>{1F8E28CE-26B5-4514-8F75-B2FE6B7C0B11}</Project>
-      <Name>Timesheet.Services</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Timesheet.Models\Timesheet.Models.csproj">
       <Project>{6D39495C-F86E-4EAF-92A3-3C9BADC37DCE}</Project>
       <Name>Timesheet.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Timesheet.Services\Timesheet.Services.csproj">
+      <Project>{1F8E28CE-26B5-4514-8F75-B2FE6B7C0B11}</Project>
+      <Name>Timesheet.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

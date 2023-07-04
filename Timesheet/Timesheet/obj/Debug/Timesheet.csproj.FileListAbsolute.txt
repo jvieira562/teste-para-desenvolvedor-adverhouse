@@ -122,5 +122,5 @@ C:\dev\Projetos\pessoal\asp.net-mvc-teste-adverhouse\Timesheet\Timesheet\obj\Deb
 C:\dev\Projetos\pessoal\asp.net-mvc-teste-adverhouse\Timesheet\Timesheet\obj\Debug\Timesheet.csproj.CopyComplete
 C:\dev\Projetos\pessoal\asp.net-mvc-teste-adverhouse\Timesheet\Timesheet\obj\Debug\Timesheet.dll
 C:\dev\Projetos\pessoal\asp.net-mvc-teste-adverhouse\Timesheet\Timesheet\obj\Debug\Timesheet.pdb
-C:\dev\Projetos\pessoal\asp.net-mvc-teste-adverhouse\Timesheet\Timesheet\bin\Timesheet.Domain.dll
-C:\dev\Projetos\pessoal\asp.net-mvc-teste-adverhouse\Timesheet\Timesheet\bin\Timesheet.Domain.pdb
+C:\dev\Projetos\pessoal\asp.net-mvc-teste-adverhouse\Timesheet\Timesheet\bin\Timesheet.Services.dll
+C:\dev\Projetos\pessoal\asp.net-mvc-teste-adverhouse\Timesheet\Timesheet\bin\Timesheet.Services.pdb
