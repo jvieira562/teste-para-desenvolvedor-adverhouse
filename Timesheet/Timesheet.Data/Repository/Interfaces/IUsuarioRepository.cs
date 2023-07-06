@@ -9,6 +9,7 @@ namespace Timesheet.Data.Repository.Interfaces
         Task<Usuario> BuscarUsuario(string email, string senha);
         Task<Usuario> BuscarUsuarioAtravesDoId(int usuarioId);
         Task<IEnumerable<Usuario>> BuscarUsuariosComProjetos();
+        Task<IEnumerable<Usuario>> BuscarUsuariosNaoAprovadoresDoLancamento(int lancamentoId);
         Task<IEnumerable<Usuario>> BuscarUsuarios();
     }
 }

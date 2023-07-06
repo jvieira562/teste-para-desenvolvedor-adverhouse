@@ -2,13 +2,15 @@ SHOW TABLES;
 SELECT * FROM Usuarios;
 SELECT * FROM Projetos;
 SELECT * FROM Jobs WHERE projeto_id = 1;
-SELECT * FROM LancamentosTimesheet WHERE projeto_id = 1;
+SELECT * FROM LancamentosTimesheet; WHERE projeto_id = 1;
 SELECT * FROM Aprovadores;
 
-UPDATE LancamentosTimesheet SET job_id = 1 WHERE job_id = 4;
+UPDATE LancamentosTimesheet SET status = 4;
 
+DELETE FROM Aprovadores;
+DESCRIBE Aprovadores;
 
-
+SELECT 1 FROM Aprovadores WHERE usuario_id = 3 AND timesheet_id = 1;
 
 SELECT u.usuario_id AS usuario_id,
 u.nome AS usuario_nome,
@@ -67,10 +69,27 @@ WHERE usuario_id = @UsuarioId
 ALTER TABLE Jobs
 ADD COLUMN descricao VARCHAR(255) NOT NULL;
 
-SELECT
+SELECT u.usuario_id, u.Nome, a.timesheet_id, a.status 
+FROM Usuarios AS u
+INNER JOIN Aprovadores AS a
+ON u.usuario_id = a.usuario_id
+WHERE a.timesheet_id = 1;;
+SELECT * FROM Aprovadores;
 
+UPDATE Aprovadores SET status = 3 WHERE usuario_id = 3;
 
+SELECT *
+FROM Usuarios
+WHERE usuario_id NOT IN (SELECT usuario_id FROM Aprovadores);
 
+SELECT *
+FROM Usuarios AS u
+WHERE NOT EXISTS (
+  SELECT 1
+  FROM Aprovadores AS a
+  WHERE a.usuario_id = u.usuario_id
+    AND a.timesheet_id = 1
+);
 
 /* INSERT */
 INSERT INTO Usuarios (nome, email, senha, tipo) 
@@ -92,6 +111,16 @@ VALUES (1, 1, 4, 'Teste', '2023-07-30', '08:30:00', 3),
 INSERT INTO Aprovadores (usuario_id, timesheet_id, status)
 VALUES (3, 1, 2);
 
+
+INSERT INTO Usuarios (nome, email, senha, tipo)
+VALUES 
+  ('João Silva', 'joao.silva@example.com', '123', 1),
+  ('Maria Santos', 'maria.santos@example.com', '123', 2),
+  ('Pedro Oliveira', 'pedro.oliveira@example.com', '123', 1),
+  ('Ana Souza', 'ana.souza@example.com', '123', 2);
+
+
+
 SELECT * FROM Usuarios AS u 
 INNER JOIN Aprovadores AS a 
 WHERE u.usuario_id = a.usuario_id;
@@ -108,3 +137,25 @@ DEALLOCATE PREPARE kill_statement;
 SHOW PROCESSLIST;
 
 KILL >336;
+
+DELETE FROM Aprovadores;
+
+
+SELECT u.usuario_id,
+u.nome,
+u.email,
+u.tipo
+FROM Usuarios AS u
+LEFT JOIN Projetos AS p 
+ON u.usuario_id = p.usuario_id
+ORDER BY u.usuario_id;
+
+SELECT DISTINCT u.usuario_id,
+u.nome,
+u.email,
+u.tipo
+FROM Usuarios u
+JOIN Projetos p ON u.usuario_id = p.usuario_id;
+
+
+UPDATE Aprovadores SET Status = 1 WHERE timesheet_id = 2;

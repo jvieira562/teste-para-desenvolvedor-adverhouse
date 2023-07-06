@@ -23,7 +23,7 @@ namespace Timesheet.Data.Repository
             using (var command = _connection.Connection.CreateCommand())
             {
                 command.CommandText =
-                    @"SELECT timesheet_id, descricao, data, hora, status 
+                    @"SELECT usuario_id, timesheet_id, descricao, data, hora, status 
                     FROM LancamentosTimesheet
                     WHERE usuario_id = @UsuarioId 
                       AND projeto_id = @ProjetoId
@@ -42,6 +42,7 @@ namespace Timesheet.Data.Repository
                         var hora = TimeSpan.Parse(reader["hora"].ToString());
                         var lancamento = new LancamentoTimesheet
                         {
+                            UsuarioId = int.Parse(reader["usuario_id"].ToString()),
                             TimesheetId = int.Parse(reader["timesheet_id"].ToString()),
                             Descricao = reader["descricao"].ToString(),
                             Data = DateTime.Now,

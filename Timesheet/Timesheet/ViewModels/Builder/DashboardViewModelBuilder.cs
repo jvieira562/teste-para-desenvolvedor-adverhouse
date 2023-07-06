@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+
 using Timesheet.Models;
 using Timesheet.Services.Interfaces;
 
@@ -17,7 +18,7 @@ namespace Timesheet.ViewModels.Builder
 
         public async Task<DashboardViewModel> BuildViewModel()
         {
-            var usuarios = await _timesheetService.BuscarUsuariosAsync();
+            var usuarios = await _timesheetService.BuscarUsuariosComProjetosAsync();
 
             var model = new DashboardViewModel
             {
@@ -30,7 +31,6 @@ namespace Timesheet.ViewModels.Builder
         private async Task<List<UsuarioViewModel>> BuildUsuariosViewModel(IEnumerable<Usuario> usuarios)
         {
             var usuariosViewModel = new List<UsuarioViewModel>();
-
             foreach (var usuario in usuarios)
             {
                 var projetosDoUsuario = await _timesheetService.BuscarProjetosDoUsuario(usuario.UsuarioId);
@@ -81,7 +81,7 @@ namespace Timesheet.ViewModels.Builder
 
             foreach (var lancamento in lancamentos)
             {
-                var aprovadores = await _timesheetService.BuscarAprovadoresDoProjetoAsync(lancamento.TimesheetId);
+                var aprovadores = await _timesheetService.BuscarAprovadoresDoLancamentoAsync(lancamento.TimesheetId);
                 var aprovadoresViewModel = BuildAprovadoresViewModel(aprovadores.ToList());
 
                 var lancamentoViewModel = LancamentosViewModel.Create(lancamento.UsuarioId, lancamento.ProjetoId, lancamento.JobId, lancamento.TimesheetId, lancamento.Descricao, lancamento.Data, lancamento.Hora, lancamento.Status, aprovadoresViewModel);
@@ -103,6 +103,8 @@ namespace Timesheet.ViewModels.Builder
 
             return aprovadoresViewModel;
         }
+
+
     }
 
 

@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using System.Collections.Generic;
 
 using Timesheet.Models;
 using Timesheet.Services.Interfaces;
@@ -16,9 +16,10 @@ namespace Timesheet.Services
             : base(uow, usuarioRepository, projetoRepository, jobRepository, lancamentoRepository, aprovadorRepository)
         {
         }
+
         #endregion
 
-        public async Task<IEnumerable<Aprovador>> BuscarAprovadoresDoProjetoAsync(int lancamentoId)
+        public async Task<IEnumerable<Aprovador>> BuscarAprovadoresDoLancamentoAsync(int lancamentoId)
         {
             var aprovadores = await _aprovadorRepository.BuscarAprovadoresDoLancamento(lancamentoId);
 
@@ -54,12 +55,49 @@ namespace Timesheet.Services
             return usuario;
         }
 
-        public async Task<IEnumerable<Usuario>> BuscarUsuariosAsync()
+        public async Task<IEnumerable<Usuario>> BuscarUsuariosComProjetosAsync()
         {
             var usuarios = await _usuarioRepository.BuscarUsuariosComProjetos();
             
             return usuarios;
         }
+        public async Task<bool> AdicionarAprovadorAsync(int usuarioId, int lancamentoId)
+        {
+            var resultado = await _aprovadorRepository.AdicionarAprovador(usuarioId, lancamentoId);
 
+            return resultado;
+        }
+
+        public async Task<bool> VerificaSeOAprovadorEstaNoLancamento(int usuarioId, int lancamentoId)
+        {
+            bool resultado = await _aprovadorRepository.VerificaSeOAprovadorEstaNoLancamento(usuarioId, lancamentoId);
+            return resultado;
+        }
+
+        public async Task<IEnumerable<Usuario>> BuscarUsuariosNaoAprovadoresAsync(int lancamentoId)
+        {
+            var usuariosNaoAprovadores = await _usuarioRepository.BuscarUsuariosNaoAprovadoresDoLancamento(lancamentoId);
+
+            return usuariosNaoAprovadores;
+        }
+
+        public Task<bool> VerificaSeOAprovadorEstaNoLancamentoAsync(int usuarioId, int lancamentoId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<IEnumerable<Usuario>> BuscarUsuariosAsync()
+        {
+            var usuarios = await _usuarioRepository.BuscarUsuarios();
+
+            return usuarios;
+        }
+
+        public async Task<bool> RemoverAprovadorAsync(int aprovadorId, int lancamentoId)
+        {
+            bool resultado = await _aprovadorRepository.RemoverAprovadorAsync(aprovadorId, lancamentoId);
+
+            return resultado;
+        }
     }
 }
