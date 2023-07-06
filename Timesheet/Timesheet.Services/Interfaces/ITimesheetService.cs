@@ -9,7 +9,10 @@ namespace Timesheet.Services.Interfaces
     {
         #region ["Usuarios"]
         Task<Usuario> BuscarUsuarioAsync(string email, string senha);
+        Task<IEnumerable<Usuario>> BuscarUsuariosComProjetosAsync();
+        Task<IEnumerable<Usuario>> BuscarUsuariosComProjetosComDataDelimitadaAsync(string dataInicial);
         Task<IEnumerable<Usuario>> BuscarUsuariosAsync();
+        Task<IEnumerable<Usuario>> BuscarUsuariosNaoAprovadoresAsync(int lancamentoId);
         #endregion
         #region ["Projetos"]
         Task<IEnumerable<Projeto>> BuscarProjetosDoUsuario(int usuarioId);
@@ -18,7 +21,12 @@ namespace Timesheet.Services.Interfaces
         #endregion
         #endregion
         #region ["Aprovadores"]
-        Task<IEnumerable<Aprovador>> BuscarAprovadoresDoProjetoAsync(int lancamentoId);
+        Task<IEnumerable<Aprovador>> BuscarAprovadoresDoLancamentoAsync(int lancamentoId);
+        Task<bool> AdicionarAprovadorAsync(int usuarioId, int lancamentoId);
+        Task<bool> VerificaSeOAprovadorEstaNoLancamentoAsync(int usuarioId, int lancamentoId);
+        Task<bool> RemoverAprovadorAsync(int aprovadorId, int lancamentoId);
+
+        Task<bool> AprovarOuReprovarLancamentoAsync(int aprovadorId, int lancamentoId, int status);
         #endregion
         #region ["Lançamentos"]
         Task<IEnumerable<LancamentoTimesheet>> BuscarLancamentosDoJobAsync(int usuarioId, int projetoId, int jobId);

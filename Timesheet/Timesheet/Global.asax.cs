@@ -10,6 +10,8 @@ using Timesheet.Services.Interfaces;
 using Timesheet.Services;
 using Timesheet.Data.Connection;
 using Ninject.Web.Common;
+using Timesheet.ViewModels.Builder;
+using Timesheet.ViewModels;
 
 namespace Timesheet
 {
@@ -28,7 +30,7 @@ namespace Timesheet
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<DatabaseConnection>().ToSelf().InSingletonScope();
-            kernel.Bind<IUnitOfWork>().To<UnitOfWork>();
+            kernel.Bind<IUnitOfWork>().To<UnitOfWork>().InSingletonScope();
             kernel.Bind<IUsuarioRepository>().To<UsuarioRepository>().InRequestScope();
             kernel.Bind<IProjetoRepository>().To<ProjetoRepository>().InRequestScope();
             kernel.Bind<IJobRepository>().To<JobRepository>().InRequestScope();
@@ -36,6 +38,7 @@ namespace Timesheet
             kernel.Bind<IAprovadorRepository>().To<AprovadorRepository>().InRequestScope();
 
             kernel.Bind<ITimesheetService>().To<TimesheetService>().InRequestScope();
+
         }
 
     }

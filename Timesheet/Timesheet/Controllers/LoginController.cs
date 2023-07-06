@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Security;
-using Timesheet.Services.Interfaces;
+using System.Threading.Tasks;
+
 using Timesheet.ViewModels;
+using Timesheet.Services.Interfaces;
 
 namespace Timesheet.Controllers
 {
@@ -14,14 +15,19 @@ namespace Timesheet.Controllers
         public async Task<ActionResult> Index()
         {
             var model = new LoginViewModel();
+
             string email = Request.Form["email"];
             string senha = Request.Form["senha"];
+
             if(email != null && senha != null)
             {
                 var usuario = await _timesheetService.BuscarUsuarioAsync(email, senha);
                 if (usuario != null)
                 {
                     FormsAuthentication.SetAuthCookie(usuario.Nome, false);
+
+                    Session["UsuarioAutenticado"] = usuario;
+
                     return RedirectToAction("Index", "Dashboard");
                 }
 

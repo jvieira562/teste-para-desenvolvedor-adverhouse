@@ -1,0 +1,6 @@
+C:\dev\Projetos\pessoal\asp.net-mvc-teste-adverhouse\Timesheet\Timesheet.Models\bin\Release\Timesheet.Models.dll
+C:\dev\Projetos\pessoal\asp.net-mvc-teste-adverhouse\Timesheet\Timesheet.Models\bin\Release\Timesheet.Models.pdb
+C:\dev\Projetos\pessoal\asp.net-mvc-teste-adverhouse\Timesheet\Timesheet.Models\obj\Release\Timesheet.Models.csproj.AssemblyReference.cache
+C:\dev\Projetos\pessoal\asp.net-mvc-teste-adverhouse\Timesheet\Timesheet.Models\obj\Release\Timesheet.Models.csproj.CoreCompileInputs.cache
+C:\dev\Projetos\pessoal\asp.net-mvc-teste-adverhouse\Timesheet\Timesheet.Models\obj\Release\Timesheet.Models.dll
+C:\dev\Projetos\pessoal\asp.net-mvc-teste-adverhouse\Timesheet\Timesheet.Models\obj\Release\Timesheet.Models.pdb
