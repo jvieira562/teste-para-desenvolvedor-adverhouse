@@ -12,7 +12,7 @@ namespace Timesheet.Data.Connection
 
         public DatabaseConnection()
         {
-            string connectionString = "Server=azure-server-mysql.mysql.database.azure.com;Port=3306;Database=testeadverhouse;Uid=sysadmin;Pwd=@TesTe201452;SslMode=Required;";
+            string connectionString = "Server=ENDERECO;Port=3306;Database=SEU_BANCO;Uid=usuario;Pwd=SENHA;SslMode=Required;";
             Connection = new MySqlConnection(connectionString);
             Connection.Open();
         }
