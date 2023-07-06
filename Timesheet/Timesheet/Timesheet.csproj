@@ -162,6 +162,8 @@
     <Content Include="Content\Componentes\load.css" />
     <Content Include="Content\Componentes\load.js" />
     <Content Include="Content\Componentes\modal.css" />
+    <Content Include="Content\Dashboard\index.css" />
+    <Content Include="Content\Dashboard\index.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -183,7 +185,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Dashboard\" />
+    <Folder Include="Content\Dashboard\css\" />
+    <Folder Include="Content\Dashboard\js\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -195,6 +198,7 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\Timesheet20230706120001 - Web Deploy.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Timesheet.Data\Timesheet.Data.csproj">

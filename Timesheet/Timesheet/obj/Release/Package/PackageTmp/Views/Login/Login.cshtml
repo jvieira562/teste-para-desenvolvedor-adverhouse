@@ -1,0 +1,36 @@
+@model Timesheet.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+}
+<style>
+
+    .mt-2 {
+        margin-top: 2rem;
+    }
+</style>
+@section styles {
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+}
+<div class="container body-content">
+    <div class="container p-5 d-flex">
+        <form class="container col-6" method="post" action="Login">
+            <h1>Acessar dashboard</h1>
+            <label class="form-label">E-mail</label>
+            <input type="email" name="email" class="form-control" id="exampleFormControlInput1" placeholder="teste@adverhouse.com" autocomplete="email">
+            <label class="form-label mt-2">Senha</label>
+            <input type="password" name="senha" id="inputPassword5" class="form-control" aria-labelledby="passwordHelpBlock" autocomplete="current-password">
+            @if (Model != null && Model.Mensagem != null)
+            {
+                <div class="container" style="padding: 0;">
+                    <div id="passwordHelpBlock" class="alert-dismissable alert-danger alert mt-2 p-2" style="margin-bottom: 0;">
+                        @Model.Mensagem
+                    </div>
+                </div>
+            }
+            <button class="btn btn-primary mt-2" type="submit">Entrar</button>
+        </form>
+    </div>
+    </div>
+    @section scripts {
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    }

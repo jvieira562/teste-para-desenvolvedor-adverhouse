@@ -68,67 +68,34 @@ INSERT INTO Status (nome, cor) VALUES
   ('Não Validado', 'Branco');
 
 
-DELIMITER //
-CREATE TRIGGER tr_atualiza_status_lancamento_timesheet
-AFTER UPDATE ON Aprovadores
-FOR EACH ROW
-BEGIN
-    IF NEW.status = 1 THEN
-        UPDATE LancamentosTimesheet
-        SET status = 1
-        WHERE timesheet_id = NEW.timesheet_id;
-    END IF;
-END //
-DELIMITER ;
 
 DELIMITER //
-CREATE TRIGGER tr_atualiza_status_lancamento_timesheet_se_aprovadores_igual_3
-AFTER UPDATE ON Aprovadores
+CREATE TRIGGER trigger_atualiza_status_lancamento_timesheet_on_delete
+AFTER DELETE ON Aprovadores
 FOR EACH ROW
 BEGIN
     DECLARE total_aprovadores INT;
+    DECLARE total_aprovadores_status_1 INT;
     DECLARE total_aprovadores_status_3 INT;
+    DECLARE total_aprovadores_status_2 INT;
 
     SELECT COUNT(*) INTO total_aprovadores FROM Aprovadores WHERE timesheet_id = NEW.timesheet_id;
+    SELECT COUNT(*) INTO total_aprovadores_status_1 FROM Aprovadores WHERE timesheet_id = NEW.timesheet_id AND status = 1;
+    SELECT COUNT(*) INTO total_aprovadores_status_2 FROM Aprovadores WHERE timesheet_id = NEW.timesheet_id AND status = 2;
     SELECT COUNT(*) INTO total_aprovadores_status_3 FROM Aprovadores WHERE timesheet_id = NEW.timesheet_id AND status = 3;
 
+    IF total_aprovadores = 0 THEN
+        UPDATE LancamentosTimesheet SET status = 4 WHERE timesheet_id = NEW.timesheet_id;
+    END IF;
+    IF total_aprovadores > 0 AND total_aprovadores_status_1 > 0 THEN
+        UPDATE LancamentosTimesheet SET status = 1 WHERE timesheet_id = NEW.timesheet_id;
+    END IF;
+    IF total_aprovadores > 0 AND total_aprovadores_status_2 > 0 AND total_aprovadores_status_1 = 0 THEN
+        UPDATE LancamentosTimesheet SET status = 2 WHERE timesheet_id = NEW.timesheet_id;
+    END IF;
     IF total_aprovadores > 0 AND total_aprovadores = total_aprovadores_status_3 THEN
         UPDATE LancamentosTimesheet SET status = 3 WHERE timesheet_id = NEW.timesheet_id;
     END IF;
 END //
 DELIMITER ;
 
-
-DELIMITER //
-
-CREATE TRIGGER tr_atualiza_status_lancamento_timesheet_se_aguardando_aprovacao
-AFTER INSERT ON Aprovadores
-FOR EACH ROW
-BEGIN
-    DECLARE total_aprovadores INT;
-    DECLARE total_aprovadores_status_2 INT;
-
-    SELECT COUNT(*) INTO total_aprovadores FROM Aprovadores WHERE timesheet_id = NEW.timesheet_id;
-    SELECT COUNT(*) INTO total_aprovadores_status_2 FROM Aprovadores WHERE timesheet_id = NEW.timesheet_id AND status = 2;
-
-    IF total_aprovadores > 0 AND total_aprovadores > total_aprovadores_status_2 THEN
-        UPDATE LancamentosTimesheet SET status = 2 WHERE timesheet_id = NEW.timesheet_id;
-    END IF;
-END //
-
-DELIMITER ;
-
-
-
-DELIMITER //
-CREATE TRIGGER tr_atualiza_status_lancamento_timesheet_se_nao_validado
-AFTER INSERT ON Aprovadores
-FOR EACH ROW
-BEGIN
-    IF NEW.status = 2 THEN
-        UPDATE LancamentosTimesheet
-        SET status = 2
-        WHERE timesheet_id = NEW.timesheet_id;
-    END IF;
-END //
-DELIMITER ;

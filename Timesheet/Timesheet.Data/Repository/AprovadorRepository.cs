@@ -1,13 +1,13 @@
 ﻿using MySql.Data.MySqlClient;
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Timesheet.Data.Connection;
-using Timesheet.Data.Repository.Interfaces;
+using System.Collections.Generic;
+
 using Timesheet.Models;
 using Timesheet.Models.Enums;
+using Timesheet.Data.Connection;
+using Timesheet.Data.Repository.Interfaces;
 
 namespace Timesheet.Data.Repository
 {
@@ -35,6 +35,28 @@ namespace Timesheet.Data.Repository
 
                 return resultado;
             }
+        }
+
+        public async Task<bool> AprovarOuReprovarLancamentoAsync(int aprovadorId, int lancamentoId, int status)
+        {
+            bool resultado = false;
+
+            using (var command = _connection.Connection.CreateCommand())
+            {
+                command.CommandText =
+                    @"UPDATE Aprovadores AS a
+                    SET status = @Status
+                    WHERE a.usuario_id = @UsuarioId
+                      AND a.timesheet_id = @LancamentoId;";
+
+                command.Parameters.Add(new MySqlParameter("@Status", status));
+                command.Parameters.Add(new MySqlParameter("@UsuarioId", aprovadorId));
+                command.Parameters.Add(new MySqlParameter("@LancamentoId", lancamentoId));
+
+                var linhasAfetadas = command.ExecuteNonQuery();
+                if (linhasAfetadas > 0) resultado = true;
+            }
+            return resultado;
         }
 
         public async Task<IEnumerable<Aprovador>> BuscarAprovadoresDoLancamento(int lancamentoId)

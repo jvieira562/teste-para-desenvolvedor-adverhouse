@@ -5,6 +5,8 @@ using Timesheet.Models;
 using Timesheet.Services.Interfaces;
 using Timesheet.Data.UnitOfWork;
 using Timesheet.Data.Repository.Interfaces;
+using System;
+using System.Linq.Expressions;
 
 namespace Timesheet.Services
 {
@@ -98,6 +100,36 @@ namespace Timesheet.Services
             bool resultado = await _aprovadorRepository.RemoverAprovadorAsync(aprovadorId, lancamentoId);
 
             return resultado;
+        }
+
+        public async Task<bool> AprovarOuReprovarLancamentoAsync(int aprovadorId, int lancamentoId, int status)
+        {
+            bool resultado = await _aprovadorRepository.AprovarOuReprovarLancamentoAsync(aprovadorId, lancamentoId, status);
+
+            return resultado;
+        }
+
+        public async Task<IEnumerable<Usuario>> BuscarUsuariosComProjetosComDataDelimitadaAsync(string dataParam)
+        {
+            //2023-06-29
+            var usuarios = new List<Usuario>();
+
+            try
+            {
+                string[] dataSplit = dataParam.Split('-');
+                int ano = int.Parse(dataSplit[0]);
+                int mes = int.Parse(dataSplit[1]);
+                int dia = int.Parse(dataSplit[2]);
+                var dataInicial= new DateTime(ano, mes, dia);
+                var dataFinal = dataInicial.AddDays(6);
+                usuarios = await _usuarioRepository.BuscarUsuariosComProjetosNaDataDelimitada(dataInicial, dataFinal);
+
+            } catch (Exception ex)
+            {
+                
+            }
+
+            return usuarios;
         }
     }
 }

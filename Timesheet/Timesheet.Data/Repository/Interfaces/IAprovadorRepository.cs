@@ -11,5 +11,6 @@ namespace Timesheet.Data.Repository.Interfaces
         Task<bool> AdicionarAprovador(int usuarioId, int lancamentoId);
         Task<bool> VerificaSeOAprovadorEstaNoLancamento(int usuarioId, int lancamentoId);
         Task<bool> RemoverAprovadorAsync(int aprovadorId, int lancamentoId);
+        Task<bool> AprovarOuReprovarLancamentoAsync(int aprovadorId, int lancamentoId, int status);
     }
 }

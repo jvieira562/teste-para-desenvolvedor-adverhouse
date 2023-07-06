@@ -27,6 +27,17 @@ namespace Timesheet.ViewModels.Builder
 
             return model;
         }
+        public async Task<DashboardViewModel> BuildViewModel(string data)
+        {
+            var usuarios = await _timesheetService.BuscarUsuariosComProjetosComDataDelimitadaAsync(data);
+
+            var model = new DashboardViewModel
+            {
+                Usuarios = await BuildUsuariosViewModel(usuarios)
+            };
+
+            return model;
+        }
 
         private async Task<List<UsuarioViewModel>> BuildUsuariosViewModel(IEnumerable<Usuario> usuarios)
         {
@@ -66,6 +77,7 @@ namespace Timesheet.ViewModels.Builder
             foreach (var job in jobs)
             {
                 var lancamentos = await _timesheetService.BuscarLancamentosDoJobAsync(job.UsuarioId, job.ProjetoId, job.JobId);
+
                 var lancamentosViewModel = await BuildLancamentosViewModel(lancamentos);
 
                 var jobViewModel = JobViewModel.Create(job.JobId, job.Nome, job.Descricao, lancamentosViewModel);

@@ -6,6 +6,7 @@ using Timesheet.Services.Interfaces;
 
 namespace Timesheet.Controllers
 {
+    [AllowAnonymous]
     public class AprovadorController : BaseController
     {
         public AprovadorController(ITimesheetService timesheetService) : base(timesheetService)
@@ -51,6 +52,18 @@ namespace Timesheet.Controllers
         {
             _timesheetService.RemoverAprovadorAsync(aprovadorId, lancamentoId);
             return new HttpStatusCodeResult(204);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AprovarOuReprovarLancamento(int aprovadorId, int lancamentoId, int status)
+        {
+            var statusCode = 400;
+
+            var resultado = await _timesheetService.AprovarOuReprovarLancamentoAsync(aprovadorId, lancamentoId, status);
+
+            if (resultado) statusCode = 204;
+
+            return new HttpStatusCodeResult(statusCode);
         }
     }
 }

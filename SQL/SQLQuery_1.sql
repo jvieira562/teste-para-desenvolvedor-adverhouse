@@ -1,7 +1,7 @@
 SHOW TABLES;
 SELECT * FROM Usuarios;
 SELECT * FROM Projetos;
-SELECT * FROM Jobs WHERE projeto_id = 1;
+SELECT * FROM Jobs WHERE projeto_id = 5;
 SELECT * FROM LancamentosTimesheet; WHERE projeto_id = 1;
 SELECT * FROM Aprovadores;
 
@@ -93,20 +93,21 @@ WHERE NOT EXISTS (
 
 /* INSERT */
 INSERT INTO Usuarios (nome, email, senha, tipo) 
-VALUES ('Gabriel', 'gb@outlook.com', '0001234', 1),
-        ('Juca', 'juca@hotmail.com', '0000011', 1);
+VALUES ('Leo', 'leo@timesheet.com', '123', 1),
+        ('Nardo', 'nardo@timesheet.com', '1234', 1);
 
+/*Leo = 9 | Nardo = 10 | ProjetoId = 5*/
 
 INSERT INTO Projetos (usuario_id, nome, descricao)
-VALUES (1, 'Barco de pesca', 'Comprar um barco de pesca.');
+VALUES (9, 'Comprar um carro', 'Tipo : Sedan');
 
-    INSERT INTO Jobs (usuario_id, projeto_id, nome, descricao)
-    VALUES (1, 4, 'Ir até a cidade', 'Usar  bicicleta.');
+INSERT INTO Jobs (usuario_id, projeto_id, nome, descricao)
+VALUES (9, 6, 'Realizar orçamento', 'Ir até a loja mais proxima.');
 
 INSERT INTO LancamentosTimesheet (usuario_id, projeto_id, job_id, descricao, data, hora, status)
-VALUES (1, 1, 4, 'Teste', '2023-07-30', '08:30:00', 3),
-        (1, 1, 4, 'Teste', '2023-07-30', '13:30:00', 1),
-        (1, 1, 4, 'Teste', '2023-07-30', '20:00:00', 2);
+VALUES (9, 6, 6, 'Verificar Andamento da tarefa', '2023-07-01', '18:27:00', 4),
+        (9, 6, 6, 'Alguma outra informação', '2023-05-06', '11:00:00', 4),
+        (9, 6, 6, 'Visita loja 3', '2023-07-10', '11:35:00', 4);
 
 INSERT INTO Aprovadores (usuario_id, timesheet_id, status)
 VALUES (3, 1, 2);
@@ -159,3 +160,13 @@ JOIN Projetos p ON u.usuario_id = p.usuario_id;
 
 
 UPDATE Aprovadores SET Status = 1 WHERE timesheet_id = 2;
+
+SELECT DISTINCT u.usuario_id, u.nome, u.email, u.tipo
+FROM Usuarios AS u
+INNER JOIN LancamentosTimesheet AS l ON u.usuario_id = l.usuario_id
+WHERE l.data >= '29/06/202300:00:00' AND l.data <= '05/07/202300:00:00';
+
+SELECT DISTINCT u.usuario_id, u.nome, u.email, u.tipo
+FROM Usuarios AS u
+INNER JOIN LancamentosTimesheet AS l ON u.usuario_id = l.usuario_id
+WHERE l.data >= @DataInicial AND l.data <= @DataFinal;

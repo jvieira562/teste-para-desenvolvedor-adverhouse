@@ -185,6 +185,42 @@ namespace Timesheet.Data.Repository
             }
         }
 
+        public async Task<List<Usuario>> BuscarUsuariosComProjetosNaDataDelimitada(DateTime dataInicial, DateTime dataFinal)
+        {
+
+            using (var command = _connection.Connection.CreateCommand())
+            {
+                var usuarios = new List<Usuario>();
+
+                command.CommandText =
+                    @"SELECT DISTINCT u.usuario_id, u.nome, u.email, u.tipo
+                    FROM Usuarios AS u
+                    INNER JOIN LancamentosTimesheet AS l ON u.usuario_id = l.usuario_id
+                    WHERE l.data >= @DataInicial AND l.data <= @DataFinal;";
+
+                command.Parameters.Add(new MySqlParameter("@DataInicial", MySqlDbType.Date) { Value = dataInicial });
+                command.Parameters.Add(new MySqlParameter("@DataFinal", MySqlDbType.Date) { Value = dataFinal });
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var usuario = new Usuario
+                        {
+                            UsuarioId = int.Parse(reader["usuario_id"].ToString()),
+                            Nome = reader["nome"].ToString(),
+                            Email = reader["email"].ToString(),
+                            Senha = "VAZIO",
+                            Tipo = (TipoUsuario)Enum.Parse(typeof(TipoUsuario), reader["tipo"].ToString())
+                        };
+                        usuarios.Add(usuario);                        
+                    }
+                }
+
+                return usuarios;
+            }
+        }
+
         #endregion
 
     }
